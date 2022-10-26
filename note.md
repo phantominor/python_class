@@ -29,5 +29,3 @@ git pull
 
 
 [This is a url](https://play.typeracer.com/)
-
-AAA
