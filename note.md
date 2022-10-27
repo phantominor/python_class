@@ -1,7 +1,15 @@
+# Pull and push
+
+git add --all
+
+git commit -m "something"
+
+git push
+
+git pull
+
 # Hello
-
 ## Hello
-
 ### Hello
 
 * a
@@ -17,15 +25,5 @@ print("hello")
 |1|2|3|
 |-|-|-|
 |1|2|3|
-
-git add --all
-
-git commit -m "something"
-
-git push
-
-
-git pull
-
 
 [This is a url](https://play.typeracer.com/)
