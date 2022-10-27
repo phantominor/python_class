@@ -28,3 +28,13 @@ Examples:
 >>> print(who_goes_free(12, 3))
 9
 '''
+
+def who_goes_free(n,k):
+    new = [i for i in range(n)]
+    for i in range(n-1):
+        a = new[0:(k-1)%len(new)]
+        b = new[(k-1)%len(new)+1:]
+        new = b + a
+    return new[0]
+        
+who_goes_free(9,5)
