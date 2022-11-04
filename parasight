@@ -1,0 +1,32 @@
+from urllib.request import urlretrieve
+import cv2
+import numpy as np
+import os
+
+
+def get_image(name, url, zoom):
+    for i in range(2**zoom):
+        for j in range(2**zoom):
+            print(i, j)
+            try:
+                urlretrieve(f"{url}/{zoom}/{i}/{j}", f"{i}_{j}.jpeg")
+            except:
+                pass
+
+    img_whl = []
+    for i in range(2**zoom):
+        img_col = []
+        for j in range(2**zoom):
+            if os.path.exists(f"{i}_{j}.jpeg"):
+                img_col.append(cv2.imread(f"{i}_{j}.jpeg"))
+            else:
+                img_col.append(np.full((256, 256, 3), 255))
+        img_whl.append(np.concatenate(img_col, axis=0))
+    image = np.concatenate(img_whl, axis=1)
+    cv2.imwrite(name, image)
+    for i in range(2**zoom):
+        for j in range(2**zoom):
+            if os.path.exists(f"{i}_{j}.jpeg"):
+                os.remove(f"{i}_{j}.jpeg")
+
+get_image("Ascaris_lumbricoides_1.jpeg", "http://microteaching.ntu.edu.tw:9002/FilePath/Pathology/A100CC88-E3D7-414C-BB84-755E3BBFD77F/0/0", 9)
