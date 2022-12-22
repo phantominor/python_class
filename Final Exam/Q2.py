@@ -19,7 +19,20 @@ X_train, X_test, y_train, y_test = train_test_split(cancer['data'], cancer.targe
 # Note that only X_train and y_train will be used in this question.
 
 def pca_plot(X_train, y_train):
-
+    from sklearn.preprocessing import MinMaxScaler
+    from sklearn.decomposition import PCA
+    scaler = MinMaxScaler()
+    scaler.fit(X_train)
+    data = scaler.transform(X_train)
+    pca = PCA(n_components=2)
+    pca.fit(data)
+    data = pca.transform(data)
+    
+    data1 = data[y_train==1]
+    data2 = data[y_train==0]
+    plt.scatter(data1[:, 0], data1[:, 1], c='b', marker='x', label='1')
+    plt.scatter(data2[:, 0], data2[:, 1], c='g', marker='s', label='0')
+    
     plt.xlabel('PC 1')
     plt.ylabel('PC 2')
     plt.legend(loc='lower right')

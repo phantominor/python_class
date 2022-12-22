@@ -12,18 +12,53 @@ import matplotlib.pyplot as plt
 # Evaluate your model and calculate the accuracy using X_test and y_test. Return the accuracy.
 # Check your answer. The function my_kmeans() would save a scatter plot and return the accuracy on the test set.
 
+# load dataset
+cancer = datasets.load_breast_cancer(as_frame=True)
+
+# split dataset
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(cancer['data'], cancer.target, test_size=0.3, random_state=0, stratify=cancer.target)
 
 def my_kmeans(X_train, y_train, X_test, y_test):
     ''' 
     1. plot and save a figure
     2. return accuracy
     '''
-    plt.scatter() # please refer to lecture note
+    from sklearn.preprocessing import MinMaxScaler
+    from sklearn.decomposition import PCA
+    from sklearn.cluster import KMeans
+    scaler = MinMaxScaler()
+    scaler.fit(X_train)
+    train_scale = scaler.transform(X_train)
+
+    pca = PCA(n_components=2)
+    pca.fit(train_scale)
+    train_pca = pca.transform(train_scale)
+
+    kmeans = KMeans(n_clusters=2)
+    kmeans.fit(train_pca)
+    anch = kmeans.cluster_centers_
+
+    test_scale = scaler.transform(X_test)
+    test_pca = pca.transform(test_scale)
+    # print(test_pca)
+    pre = (test_pca[:, 0] < 0).astype(int)
+    ans = y_test.to_numpy()
+    corr = (pre == ans).astype(int)
+    acc = corr.sum() / len(ans)
+    
+    test_pca1 = test_pca[y_test==1]
+    test_pca2 = test_pca[y_test==0]
+    plt.scatter(test_pca1[:, 0], test_pca1[:, 1], c='g', marker='s', label='0')
+    plt.scatter(test_pca2[:, 0], test_pca2[:, 1], c='b', marker='x', label='1')
+    
+    # plt.scatter(test_pca[:, 0], test_pca[:, 1], c=y_test) # please refer to lecture note
+    plt.scatter(anch[0, 0], anch[0, 1], c='r', marker='^')
+    plt.scatter(anch[1, 0], anch[1, 1], c='r', marker ='^')
     plt.legend(loc='best')
     plt.title('Unsupervised classifier')
     plt.tight_layout()
     plt.savefig('./kmeans_results.png')
-    
     return acc 
     
 acc=my_kmeans(X_train, y_train, X_test, y_test)

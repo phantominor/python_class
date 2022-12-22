@@ -14,7 +14,12 @@ import matplotlib.pyplot as plt
 # PCA data, shape=(398, 2)
 # Use plt.plot to show your results in a figure with three curves. The x-axis should represent the different values of n_neighbors and the y-axis should represent the accuracy of the model.
 
+# load dataset
+cancer = datasets.load_breast_cancer(as_frame=True)
 
+# split dataset
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(cancer['data'], cancer.target, test_size=0.3, random_state=0, stratify=cancer.target)
 
 def my_knn(X_train, y_train, X_test, y_test):
     
