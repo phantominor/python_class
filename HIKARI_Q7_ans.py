@@ -61,7 +61,7 @@ class evaluation:
 
     def confusion_matrix(self):
         'here, etc.'
-        return np.array([[self.TP, self.FN], [self.FP, self.FN]])
+        return np.array([[self.TP, self.FN], [self.FP, self.TN]])
     
     def precision(self):
         return self.TP / (self.TP + self.FP)

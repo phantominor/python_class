@@ -39,19 +39,38 @@ class evaluation:
         self.prediction = prediction
         self.actual_value = actual_value   
         'code here'
+        TP = 0
+        FP = 0
+        TN = 0
+        FN = 0
+        for i in range(len(prediction)):
+            if prediction[i] == 1:
+                if actual_value[i] == 1:
+                    TP += 1
+                if actual_value[i] == 0:
+                    FP += 1
+            if prediction[i] == 0:
+                if actual_value[i] == 1:
+                    FN += 1
+                if actual_value[i] == 0:
+                    TN += 1
+        self.TP = TP
+        self.FP = FP
+        self.TN = TN
+        self.FN = FN
         
     def confusion_matrix(self):
         'here, etc.'
-        return cm
+        return np.array([[self.TP, self.FN], [self.FP, self.TN]])
     
     def precision(self):
-        return precision
+        return self.TP / (self.TP + self.FP)
     
     def recall(self):
-        return recall
+        return self.TP / (self.TP + self.FN)
     
     def accuracy(self):
-        return acc
+        return (self.TP + self.TN) / (self.TP + self.TN + self.FP + self.FN)
 
 my_evaluation = evaluation([0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0], [1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0])
 print('Confusion matrix:\n', my_evaluation.confusion_matrix())
