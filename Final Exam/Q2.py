@@ -3,7 +3,7 @@ import pandas as pd
 import sklearn # or its sub-package
 from sklearn import datasets
 import matplotlib.pyplot as plt
-# We use the breast dataset from sklean in this question:
+# We use the breast dataset from sklearn in this question:
 
 # load dataset
 cancer = datasets.load_breast_cancer(as_frame=True)

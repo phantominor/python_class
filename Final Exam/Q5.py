@@ -37,7 +37,7 @@ def covid_death_rate(covid_df):
     plt.grid() # set the grid
     plt.xlabel('Death Rate (%)', fontsize=15)
     plt.tight_layout() # align the figure
-    plt.savefig("./covid_bar.png") # save the figure
+    # plt.savefig("./covid_bar.png") # save the figure
     plt.show()
     
 covid_death_rate(covid_df)
