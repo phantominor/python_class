@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 clean = np.loadtxt('https://raw.githubusercontent.com/Kungbohan/final2022/main/101_original.csv')
 noisy = np.loadtxt('https://raw.githubusercontent.com/Kungbohan/final2022/main/101_noisy.csv')
 
-def denoise_ecg(signal):
+def denoise_ecg_2(signal):
     def low_pass_filter(data: np.ndarray, bandlimit, sampling_rate) -> np.ndarray:
         bandlimit_index = int(bandlimit*data.size/sampling_rate)
         fsig = np.fft.fft(data)
@@ -19,5 +19,5 @@ def denoise_ecg(signal):
         return np.real(data_filtered)
     return low_pass_filter(signal, 399, 400)
 
-correct = denoise_ecg(noisy)
+correct = denoise_ecg_2(noisy)
 print(f'Your mean square arror is: {np.sum((correct-clean)**2/len(clean))}')
